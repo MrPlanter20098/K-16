@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script language="javascript">
+		var x = 225;
+		var y = 600;
+		
+		var KEY_CODE = {
+		  LEFT: 37,
+		  UP: 38,
+		  RIGHT: 39,
+		  DOWN: 40
+		};
+		
+		function move(event){
+			switch(event.keyCode) {
+			case KEY_CODE.LEFT:
+				document.getElementById('tank').style.backgroundImage = 'url("tank-L.png")';
+				x -= 25;
+				document.getElementById('tank').style.marginLeft = x+'px';
+			break;
+			case KEY_CODE.UP:
+				document.getElementById('tank').style.backgroundImage = 'url("tank-U.png")';
+				y -= 25;				
+				document.getElementById('tank').style.marginTop = y+'px';
+			break;
+			case KEY_CODE.RIGHT:
+				document.getElementById('tank').style.backgroundImage = 'url("tank-R.png")';
+				x += 25;
+				document.getElementById('tank').style.marginLeft = x+'px';
+			break;
+			case KEY_CODE.DOWN:
+				document.getElementById('tank').style.backgroundImage = 'url("tank-D.png")';
+				y += 25;
+				document.getElementById('tank').style.marginTop = y+'px';
+			break;
+			}	
+		}
+		
+		window.addEventListener('keydown', move, false);
+	</script>
+	<style>
+		#bg{
+			background: url('bg.png') no-repeat;
+			width: 650px;
+			height: 650px;
+		}		
+		#tank{	
+			background: url('tank-U.png') no-repeat;
+			width: 50px;
+			height: 50px;		
+			margin-top: 600px;
+			margin-left: 225px;
+			position: absolute;
+		}
+	</style>
+</head>
+<body>
+	<div id="bg">
+		<div id="tank"></div>
+	</div>
+</body>
+</html>

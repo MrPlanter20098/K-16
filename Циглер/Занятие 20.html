@@ -1,0 +1,57 @@
+<HTML>
+	<HEAD>
+		<TITLE>
+			Доска объявлений
+		</TITLE>
+	</HEAD>
+	<BODY>
+		<input id="mark" type="text" placeholder="Марка">
+		<input id="model" type="text" placeholder="Модель">
+		<input id="year" type="text" placeholder="Год выпуска">
+		<input id="carImage" type="text" placeholder="url картинки">
+		<input type="button" value="Добавить" onclick="addAd()">
+		<div id="adContaner">
+		</div>
+		<script>
+		
+		let cars = JSON.parse(localStorage.getItem('cars')) || []
+		
+		function renderCard(cardIndex, mark, model, year, carImage) {
+			adContaner.innerHTML += `<p>Номер объявления ${cardIndex}</p>`
+			adContaner.innerHTML += `<p>Марка ${mark}</p>`
+			adContaner.innerHTML += `<p>Модель ${model}</p>`
+			adContaner.innerHTML += `<p>Год ${year}</p>`
+			adContaner.innerHTML += `<img src=${carImage} width="272px" height="204px">`
+		}
+		
+		function addAd() {
+			cars.push({
+				mark: mark.value,
+				model: model.value,
+				year: year.value,
+				carImage: carImage.value
+			})
+			
+			localStorage.setItem('cars', JSON.stringify(cars))
+		
+			renderCard(
+				cars.length, 
+				cars[cars.length-1].mark, 
+				cars[cars.length-1].model, 
+				cars[cars.length-1].year,
+				cars[cars.length-1].carImage
+			)
+		}
+		
+		for (i = 1; i <= cars.length; i++) {
+			renderCard(
+				i, 
+				cars[i-1].mark, 
+				cars[i-1].model, 
+				cars[i-1].year,
+				cars[i-1].carImage,
+			)
+		}
+		</script>
+	</BODY>
+</HTML>

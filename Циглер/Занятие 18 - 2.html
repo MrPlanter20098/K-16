@@ -1,0 +1,18 @@
+<HTML>
+	<HEAD>
+		<TITLE>
+			Локальное хранилище
+		</TITLE>
+	</HEAD>
+	<BODY>
+		<script>
+			if (!localStorage.getItem('approved')) { 		
+				let approved = confirm("Принять условия сайта")
+				
+				if (approved) {
+					localStorage.setItem('approved', true)
+				}
+			}
+		</script>
+	</BODY>
+</HTML>

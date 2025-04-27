@@ -1,0 +1,31 @@
+<HTML>
+	<HEAD>
+		<TITLE>
+			Анимации
+		</TITLE>
+		<style>
+			body {
+				margin: 0;
+			}
+			.animated-image {
+				width: 512px;
+				height: 341px;
+				-webkit-transition: transform 2s linear;
+				transform: translate(-512px, -341px);
+			}
+			
+			.animation-image-scaled {
+				transform: translate(0, 0);
+			}
+		</style>
+	</HEAD>
+	<BODY>
+		<input type="button" value="Нажми меня" onClick="startAnimation()">
+		<img id="animatedImageTag" class="animated-image" src="https://fond-vsem-mirom.ru/wp-content/uploads/2020/06/gk_zdhbg784-1024x682.jpg">
+		<script>
+			function startAnimation () {
+				animatedImageTag.classList.add("animation-image-scaled")
+			}
+		</script>
+	</BODY>
+</HTML>

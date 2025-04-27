@@ -1,0 +1,20 @@
+<HTML>
+	<HEAD>
+		<TITLE>
+			Вы успешно зарегестрировались
+		</TITLE>
+	</HEAD>
+	<BODY>
+		<p id="ln">
+		</p>
+		<p id="fn">
+		</p>
+		<script>
+			let urlParams = new URLSearchParams(window.location.search)
+			let lastName = urlParams.get('lastName')
+			ln.innerText = lastName
+			let firstName = urlParams.get('firstName')
+			fn.innerText = firstName
+		</script>
+	</BODY>
+</HTML>

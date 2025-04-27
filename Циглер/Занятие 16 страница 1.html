@@ -1,0 +1,17 @@
+<HTML>
+	<HEAD>
+		<TITLE>
+			Регистрация
+		</TITLE>
+	</HEAD>
+	<BODY>
+		<input type="text" placeholder="Фамилия" id="lastName">
+		<input type="text" placeholder="Имя" id="firstName">
+		<input type="button" value="Зарегистрироваться" onClick="register()">
+		<script>
+			function register () {
+				window.location.href = "Занятие 16 страница 2.html?lastName=" + lastName.value + "&firstName=" + firstName.value
+			}
+		</script>
+	</BODY>
+</HTML>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+    <script crossorigin src="https://cdn.jsdelivr.net/npm/@babel/standalone@7/babel.min.js"></script>
+    <!-- To make the map appear, you must add your apikey -->
+    <script src="https://api-maps.yandex.ru/v3/?apikey=571d6d45-1d78-4c1c-acec-7ddfc0008783&lang=en_US" type="text/javascript"></script>
+
+    <script
+      data-plugins="transform-modules-umd"
+      data-presets="typescript"
+      type="text/babel"
+      src="../variables.ts"
+    ></script>
+    <script
+      data-plugins="transform-modules-umd"
+      data-presets="typescript"
+      type="text/babel"
+      src="./common.ts"
+    ></script>
+    <script data-plugins="transform-modules-umd" data-presets="typescript" type="text/babel">
+      import type {LngLat, MapEventUpdateHandler, RouteFeature} from '@yandex/ymaps3-types';
+      import {LOCATION, MARKERS} from '../variables';
+      import {
+          ZOOMS,
+          ANIMATION_DURATION,
+          angleFromCoordinate,
+          animate,
+          fetchRoute,
+          MarkerSize,
+          type MarkerProps
+      } from './common';
+
+      window.map = null;
+
+      main();
+
+      async function main() {
+          let markers = MARKERS.reduce<{[key: number]: MarkerProps}>((previousValue, currentValue) => {
+              previousValue[currentValue.id] = currentValue;
+              return previousValue;
+          }, {});
+          let size = MarkerSize.big;
+
+          // Waiting for all api elements to be loaded
+          await ymaps3.ready;
+          const {YMap, YMapDefaultSchemeLayer, YMapDefaultFeaturesLayer, YMapMarker, YMapListener} = ymaps3;
+
+          // Initialize the map
+          map = new YMap(
+              // Pass the link to the HTMLElement of the container
+              document.getElementById('app'),
+              // Pass the map initialization parameters
+              {location: LOCATION, showScaleInCopyrights: true},
+              [
+                  // Add a map scheme layer
+                  new YMapDefaultSchemeLayer({}),
+                  // Add a layer of geo objects to display the line
+                  new YMapDefaultFeaturesLayer({})
+              ]
+          );
+
+          const startAnimation = (markerProp: MarkerProps) => {
+              const prevCoordinates = markerProp.coordinates;
+              const diff: LngLat = [
+                  markerProp.route.geometry.coordinates[0][0] - prevCoordinates[0],
+                  markerProp.route.geometry.coordinates[0][1] - prevCoordinates[1]
+              ];
+
+              if (Math.abs(diff[0]) + Math.abs(diff[1]) < 1e-6) {
+                  setNextCoordinates(markerProp);
+                  return;
+              }
+
+              animate((progress) => {
+                  markerProp.marker.update({
+                      coordinates: [prevCoordinates[0] + diff[0] * progress, prevCoordinates[1] + diff[1] * progress]
+                  });
+                  if (progress === 1) {
+                      setNextCoordinates(markerProp);
+                  }
+              }, ANIMATION_DURATION);
+          };
+
+          const setNextCoordinates = (markerProp: MarkerProps) => {
+              if (markerProp.route && markerProp.route.geometry.coordinates.length) {
+                  const coordinates = markerProp.route.geometry.coordinates.shift();
+                  const angle = angleFromCoordinate(coordinates, markerProp.route.geometry.coordinates[0]);
+                  markerProp.coordinates = coordinates;
+
+                  const markerElement = document.getElementById(String(markerProp.id));
+                  (markerElement.firstElementChild as HTMLElement).style.transform = `rotate(${angle}deg)`;
+                  markerProp.angle = angle;
+
+                  startAnimation(markerProp);
+              }
+          };
+
+          /* A handler function that updates the route line
+               and shifts the map to the new route boundaries, if they are available. */
+          const routeHandler = (newRoute: RouteFeature, id: number) => {
+              if (markers[id]) {
+                  markers[id].route = newRoute;
+              }
+              setNextCoordinates(markers[id]);
+          };
+
+          Object.values(markers).forEach((marker) => {
+              fetchRoute(marker.start, marker.end).then((route) => routeHandler(route, marker.id));
+          });
+
+          // Create markers with a custom icon and add them to the map
+          Object.values(markers).forEach((markerProp) => {
+              const markerElement = document.createElement('div');
+              markerElement.id = String(markerProp.id);
+              markerElement.classList.add('marker_container', MarkerSize.big);
+
+              const markerElementImg = document.createElement('img');
+              markerElementImg.src = markerProp.background[MarkerSize.big];
+              markerElementImg.alt = 'marker';
+              markerElementImg.classList.add('marker', MarkerSize.big);
+              markerElement.appendChild(markerElementImg);
+
+              const markerElementIconImg = document.createElement('img');
+              markerElementIconImg.src = markerProp.icon[MarkerSize.big];
+              markerElementIconImg.alt = 'icon';
+              markerElementIconImg.classList.add('marker_icon', MarkerSize.big);
+              markerElement.appendChild(markerElementIconImg);
+
+              const markerElementText = document.createElement('span');
+              markerElementText.innerText = markerProp.text;
+              markerElementText.classList.add('marker_text', MarkerSize.big);
+              markerElement.appendChild(markerElementText);
+
+              const marker = new YMapMarker(
+                  {coordinates: markerProp.coordinates, disableRoundCoordinates: true},
+                  markerElement
+              );
+              markers[markerProp.id].marker = marker;
+              map.addChild(marker);
+          });
+
+          const updateHandler: MapEventUpdateHandler = (o) => {
+              let newSize;
+              if (o.location.zoom <= ZOOMS.small) {
+                  newSize = MarkerSize.small;
+              } else if (o.location.zoom <= ZOOMS.big && o.location.zoom >= ZOOMS.small) {
+                  newSize = MarkerSize.medium;
+              } else if (o.location.zoom >= ZOOMS.big) {
+                  newSize = MarkerSize.big;
+              }
+              if (newSize !== size) {
+                  Object.values(markers).forEach((markerProp) => {
+                      const markerElement = document.getElementById(String(markerProp.id));
+                      markerElement.classList.replace(size, newSize);
+
+                      (markerElement.firstElementChild as HTMLImageElement).src = markerProp.background[newSize];
+                      (markerElement.firstElementChild as HTMLImageElement).classList.replace(size, newSize);
+
+                      markerElement.children[1].classList.replace(size, newSize);
+                      (markerElement.children[1] as HTMLImageElement).src = markerProp.icon[newSize];
+
+                      (markerElement.lastElementChild as HTMLSpanElement).innerText = markerProp.text;
+                      (markerElement.lastElementChild as HTMLSpanElement).classList.replace(size, newSize);
+                  });
+                  size = newSize;
+              }
+          };
+
+          /* Add a listener to the map and pass the handlers functions for the events you want to process
+        These are just some of the events, you can see them all in the documentation */
+          map.addChild(
+              new YMapListener({
+                  onUpdate: updateHandler
+              })
+          );
+      }
+    </script>
+
+    <!-- prettier-ignore -->
+    <style> html, body, #app { width: 100%; height: 100%; margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; } .toolbar { position: absolute; z-index: 1000; top: 0; left: 0; display: flex; align-items: center; padding: 16px; } .toolbar a { padding: 16px; }  </style>
+    <link rel="stylesheet" href="./common.css" />
+    <link rel="stylesheet" href="../variables.css" />
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+</html>

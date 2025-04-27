@@ -1,0 +1,21 @@
+<HTML>
+	<HEAD>
+		<TITLE>
+			Тег progress
+		</TITLE>
+	</HEAD>
+	<BODY>
+		<progress id="loadingProgress" value="0" max="100">
+		<script>
+			function changeProgress () {
+				loadingProgress.value = loadingProgress.value + 1
+				console.log("ОПА!")
+				if (loadingProgress.value >= loadingProgress.max) {
+					clearInterval(intervalId)
+				}
+			}
+			
+			let intervalId = setInterval(changeProgress, 100)
+		</script>
+	</BODY>
+</HTML>
