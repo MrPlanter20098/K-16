@@ -1,0 +1,26 @@
+<HTML>
+	<HEAD>
+		<TITLE>
+			Транспорт
+		</TITLE>
+	</HEAD>
+	<BODY>
+		Количество пассажиров
+		<input id="count" type="text"><br>
+		<input onClick="getTransport()" type="button" value="Получить транспорт">
+		<img id="imageId" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZf0UqRWHNd1Dq4Gmi_TbzyIBpWH1MG6gqSg&s" width="100px" height="100px">
+		<script>
+			function getTransport() {
+				let val = +count.value
+				
+				if (val <= 2) {
+					imageId.src = "https://motorrika.ru/image/cache/catalog/Motorcycles/1_kawasaki/kawasaki-ninja-650-gray-ebony-2023-01-1600x1200.jpg"
+				} else if(val <= 5) {
+					alert("Машина")
+				} else if (val <= 13) {
+					alert("Микроавтобус")
+				}
+			}
+		</script>
+	</BODY>
+</HTML>

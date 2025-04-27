@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  </head>
+  <body>
+    <h1>Hello, world!</h1>
+	<h2>Example heading <span class="badge text-bg-primary">New</span></h2>
+	<div class="accordion" id="accordionExample">
+	  <div class="accordion-item">
+		<h2 class="accordion-header">
+		  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+			Когда будет ночной сбор
+		  </button>
+		</h2>
+		<div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+		  <div class="accordion-body">
+			<strong>Ночной сбор пройдет в следующую субботу</strong>
+		  </div>
+		</div>
+	  </div>
+	  <div class="accordion-item">
+		<h2 class="accordion-header">
+		  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+			Accordion Item #2
+		  </button>
+		</h2>
+		<div id="collapseTwo" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+		  <div class="accordion-body">
+			<strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+		  </div>
+		</div>
+	  </div>
+	  <div class="accordion-item">
+		<h2 class="accordion-header">
+		  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+			Accordion Item #3
+		  </button>
+		</h2>
+		<div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+		  <div class="accordion-body">
+			<strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+		  </div>
+		</div>
+	  </div>
+	  	  <div class="accordion-item">
+		<h2 class="accordion-header">
+		  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+			Accordion Item #2
+		  </button>
+		</h2>
+		<div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+		  <div class="accordion-body">
+			<strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+		  </div>
+		</div>
+	  </div>
+	</div>		
+	<div width="200px" class="alert alert-danger" role="alert">
+		Заполните номер телефона
+	</div>
+	<button type="button" class="btn btn-primary">
+	  Notifications <span class="badge text-bg-secondary">5</span>
+	</button>
+	
+	<div id="carouselExample" class="carousel slide">
+	  <div class="carousel-inner">
+		<div class="carousel-item active">
+		  <img src="https://masterpiecer-images.s3.yandex.net/9ca00f956ad611eeb722badf81d486ab:upscaled" class="d-block w-100" alt="...">
+		</div>
+		<div class="carousel-item">
+		  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlESuA2d3-QifwIoYYr3uW1KJRkNiit4MEMQ&s" class="d-block w-100" alt="...">
+		</div>
+		<div class="carousel-item">
+		  <img src="https://masterpiecer-images.s3.yandex.net/9ca00f956ad611eeb722badf81d486ab:upscaled" class="d-block w-100" alt="...">
+		</div>
+	  </div>
+	  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Previous</span>
+	  </button>
+	  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+		<span class="carousel-control-next-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Next</span>
+	  </button>
+	</div>
+	
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>

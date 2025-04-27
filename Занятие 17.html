@@ -1,0 +1,91 @@
+<HTML>
+	<HEAD>
+		<TITLE>
+			Крестики-нолики
+		</TITLE>
+	</HEAD>
+	<BODY>
+		<input 
+			id="b11" 
+			type="button" 
+			value=" " 
+			onClick="makeMove(this, event)"
+		>
+		<input 
+			id="b12" 
+			type="button" 
+			value=" " 
+			onClick="makeMove(this, event)"
+		>
+		<input 
+			id="b13" 
+			type="button" 
+			value=" " 
+			onClick="makeMove(this, event)"
+		>
+		<br>
+		<input 
+			id="b21" 
+			type="button" 
+			value=" " 
+			onClick="makeMove(this, event)"
+		>
+		<input 
+			id="b22" 
+			type="button" 
+			value=" " 
+			onClick="makeMove(this, event)">
+		<input 
+			id="b23" 
+			type="button" 
+			value=" " 
+			onClick="makeMove(this, event)"
+		>
+		<br>
+		<input 
+			id="b31" 
+			type="button" 
+			value=" " 
+			onClick="makeMove(this, event)"
+		>
+		<input 
+			id="b32" 
+			type="button" 
+			value=" " 
+			onClick="makeMove(this, event)"
+		>
+		<input 
+			id="b33" 
+			type="button" 
+			value=" " 
+			onClick="makeMove(this, event)"
+		>
+		<script>
+			let player = "X"
+			function makeMove (element, event) {
+				if (element.value === " ") {
+					element.value = player
+					
+					if (
+						b11.value === player && b12.value === player && b13.value === player ||
+						b21.value === player && b22.value === player && b23.value === player ||
+						b31.value === player && b32.value === player && b33.value === player ||
+						b11.value === player && b21.value === player && b31.value === player ||
+						b12.value === player && b22.value === player && b32.value === player ||
+						b13.value === player && b23.value === player && b33.value === player ||
+						b11.value === player && b22.value === player && b33.value === player ||
+						b31.value === player && b22.value === player && b31.value === player
+					) {
+						alert("Победа!")
+					}
+					
+					if (player === "X") {
+						player = "O"
+					} else {
+						player = "X"
+					}
+				}
+			}
+		</script>
+	</BODY>
+</HTML>
